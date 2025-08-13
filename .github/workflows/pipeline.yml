@@ -68,8 +68,19 @@ jobs:
       # 8. Register new task definition revision
       - name: Register new task definition
         run: |
+          # Remove read-only fields before registering
+          jq 'del(
+            .taskDefinitionArn,
+            .revision,
+            .status,
+            .requiresAttributes,
+            .compatibilities,
+            .registeredAt,
+            .registeredBy
+          )' new-taskdef.json > cleaned-taskdef.json
+
           aws ecs register-task-definition \
-            --cli-input-json file://new-taskdef.json
+            --cli-input-json file://cleaned-taskdef.json
 
       # 9. Update ECS service to use new task definition
       - name: Deploy new task definition
