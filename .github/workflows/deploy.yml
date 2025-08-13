@@ -9,7 +9,7 @@ env:
   AWS_REGION: ap-south-1
   CLUSTER_NAME: Dem-Cluster
   SERVICE_NAME: ecs-task-service-bn4bpjfz
-  IMAGE_NAME: ayushv274/ecs-demo:v1
+  IMAGE_NAME: ayushv274/ecs-demo
 
 jobs:
   deploy:
