@@ -3,7 +3,7 @@ name: Build, Push, and Deploy to ECS
 on:
   push:
     branches:
-      - main  # Trigger only on main branch commits
+      - demo-branch  # Trigger only on main branch commits
 
 env:
   AWS_REGION: ap-south-1
