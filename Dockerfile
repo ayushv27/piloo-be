@@ -1,14 +1,16 @@
-FROM python:3.11
-ENV PYTHONDONTWRITEBYTECODE=1
-# ENV PIP_DISABLE_PIP_VERSION_CHECK on
-ENV PYTHONUNBUFFERED=1
+# Use Python 3.11 on Debian Bullseye (wkhtmltopdf available in apt)
+FROM python:3.11-bullseye
+
+# Environment settings
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+# Set working directory
 WORKDIR /code
-COPY requirements.txt /code/
-RUN apt-get -y update && apt-get -y upgrade
-RUN apt update && apt install curl
-RUN pip install --no-cache-dir -r requirements.txt 
-# Install system dependencies for WeasyPrint
-RUN apt-get update && apt-get install -y \
+
+# Install system dependencies in one layer
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y \
     build-essential \
     libffi-dev \
     libcairo2 \
@@ -24,6 +26,10 @@ RUN apt-get update && apt-get install -y \
     wkhtmltopdf \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-# RUN apt install libpango1.0-0 libpangocairo-1.0-0 libffi-dev libcairo2
 
+# Copy requirements and install Python dependencies
+COPY requirements.txt /code/
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
 COPY . /code/
