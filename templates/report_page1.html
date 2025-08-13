@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Alerts Report Template</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 297mm;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        overflow: visible;
+      }
+
+      .cover-page {
+        width: 100%;
+        height: 297mm;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden; /* Prevent content from spilling */
+      }
+
+      .report-header {
+        width: 100%;
+        height: 200mm;
+        position: relative;
+        background: linear-gradient(
+            180deg,
+            #0a0453 0%,
+            rgba(15, 7, 115, 0.3) 100%
+          ),
+          url("https://image.piloo.ai/static/images/bgImage.svg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .report-footer {
+        height: 97mm; /* Make sure header + footer = 297mm */
+        display: flex;
+        justify-content: space-between;
+        padding: 40px 50px;
+        width: 100%;
+        background: white;
+        gap: 40px;
+        box-sizing: border-box;
+      }
+      .report-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .report-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: radial-gradient(
+            circle at 20% 30%,
+            rgba(255, 255, 255, 0.05) 1px,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 80% 70%,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 40% 80%,
+            rgba(255, 255, 255, 0.02) 1px,
+            transparent 1px
+          );
+        background-size: 100px 100px, 150px 150px, 200px 200px;
+        z-index: 0;
+      }
+
+      .header-content {
+        position: relative;
+        z-index: 1;
+        padding: 40px 50px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        color: white;
+      }
+
+      .top-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .logo-section {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .logo {
+        font-size: 36px;
+        font-weight: bold;
+        letter-spacing: -1px;
+      }
+
+      .logo-highlight {
+        color: #ff6b6b;
+      }
+
+      .tagLine {
+        width: 100%;
+      }
+
+      .tagline-divider {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        margin-bottom: 10px;
+      }
+
+      .tagline-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+      }
+
+      .subtitle {
+        font-size: 18px;
+        font-weight: 600;
+        opacity: 0.9;
+        color: #ffffff;
+      }
+
+      .made-with {
+        font-size: 18px;
+        font-weight: 600;
+        opacity: 0.8;
+        color: #ffffff;
+      }
+
+      .made-with .heart {
+        color: #ff6b6b;
+        font-size: 18px;
+      }
+
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        margin-top: 50px;
+      }
+
+      .report-label {
+        font-size: 24px;
+        font-weight: 500;
+        letter-spacing: 4px;
+        margin-bottom: 20px;
+        opacity: 0.8;
+        color: #c8c8c8;
+      }
+
+      .report-title {
+        font-size: 64px;
+        font-weight: bold;
+        line-height: 1.1;
+        margin-bottom: 20px;
+        max-width: 600px;
+        letter-spacing: 2px;
+      }
+
+      .title-underline {
+        width: 50%;
+        height: 2px;
+        background: #f59e0b;
+        margin-bottom: 20px;
+        border: none;
+      }
+
+      .date-range {
+        font-size: 24px;
+        font-weight: 600;
+        opacity: 0.9;
+        line-height: 100%;
+        letter-spacing: 0px;
+      }
+
+      .footer-left {
+        width: 40%;
+        border-right: 1px solid #0000001a;
+        padding-right: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .footer-right {
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-left: 8px;
+      }
+
+      .prepared-for {
+        font-size: 24px;
+        font-weight: 600;
+        color: #000000;
+        margin-bottom: 5px;
+      }
+
+      .client-info {
+        font-size: 18px;
+        color: #000000;
+        font-weight: 400;
+      }
+
+      .footer-text {
+        border-bottom: 1px solid #0000001a;
+        padding-bottom: 8px;
+      }
+
+      .lorem-text {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #666;
+        text-align: justify;
+      }
+      .lorem-text-main {
+        font-weight: bold;
+        color: #d74164;
+        padding-top: 2px;
+        padding-bottom: 3px; 
+        font-size: 18px;
+      }
+
+      .lorem-main-text {
+        font-size: 16px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        font-weight: bold;
+        color: #0f0773;
+      }
+
+      .footer-info {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 8px;
+      }
+
+      .plan-label,
+      .active-label {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 2px;
+      }
+
+      .plan-value,
+      .camera-value {
+        font-size: 20px;
+        font-weight: bold;
+        color: #0f0773;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cover-page">
+      <div class="report-container">
+        <div class="report-header">
+          <div class="header-content">
+            <div class="top-section">
+              <div class="logo-section">
+                <div class="logo">
+                  <!-- pil<span class="logo-highlight">oo</span> -->
+                  <img
+                    src="https://image.piloo.ai/static/images/Logo_new.svg"
+                    alt="Logo"
+                    width="150"
+                    height="80"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="tagLine">
+              <hr class="tagline-divider" />
+              <div class="tagline-content">
+                <div class="subtitle">AI-Powered Video Analytics</div>
+                <div class="made-with">
+                  Made with <span class="heart">❤</span> by Pyrack
+                </div>
+              </div>
+            </div>
+
+            <div class="main-content">
+              <div class="report-label">{{ report_frequency }} REPORT</div>
+              <div class="report-title">Event Alerts<br />Report</div>
+              <div class="title-underline"></div>
+              <div class="date-range">{{ report_period }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="report-footer">
+          <!-- LEFT SECTION -->
+          <div class="footer-left">
+            <div class="prepared-for">Prepared For :</div>
+            <div class="client-info">{{client_name}}</div>
+          </div>
+
+          <!-- RIGHT SECTION -->
+          <div class="footer-right">
+            <div class="footer-text">
+              <div class="lorem-text">
+                <span class="lorem-text-main">
+                  Welcome to your Event Alerts Report</span
+                >
+                <br />
+                Pillo is an AI-powered video analytics platform built for the
+                modern workplace. This report summarizes key events and alerts
+                detected across your active cameras.
+                <br />
+                <span class="lorem-main-text"
+                  >Stop Watching Start Asking.
+                </span>
+              </div>
+            </div>
+            <div class="footer-info">
+              <div class="plan-info">
+                <div class="plan-label">Plan :</div>
+                <div class="plan-value">{{plan}}</div>
+              </div>
+              <div class="camera-info">
+                <div class="camera-label">Active Cameras :</div>
+                <div class="camera-value">{{active_cameras}} Cameras</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

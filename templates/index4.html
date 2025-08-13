@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Alerts Report - Page 4</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 297mm;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .cover-page {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 297mm;
+            min-height: 297mm;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+        }
+        
+        .report-container {
+            width: 100%;
+            height: 297mm;
+            max-width: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+        
+        .report-header {
+            width: 100%;
+            height: 217mm;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            padding: 40px 50px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .report-footer {
+            width: 90%;
+            height: 80mm;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            /* background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%); */
+            background-color: #0F0773CC;
+            border-radius: 0 30px 0 0;
+            padding: 30px 50px;
+            color: white;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1a1a4a;
+            letter-spacing: -1px;
+        }
+        
+        .logo-highlight {
+            color: #ff6b6b;
+        }
+        
+        .month-info {
+            color: #666;
+            font-size: 16px;
+            font-weight: 500;
+            text-align: right;
+            line-height: 1.3;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            max-width: 100%;
+            padding-right: 50px;
+        }
+        
+        .tagline {
+            font-size: 56px;
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            /* background: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%); */
+            color: #8b5cf6;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+        
+        .powered-by {
+            font-size: 24px;
+            color: #1a1a4a;
+            font-weight: 500;
+        }
+        
+        .contact-section {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contact-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            color: white;
+            opacity: 0.95;
+        }
+        
+        .contact-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .contact-text {
+            word-break: break-all;
+        }
+        
+        /* Ensure no overflow */
+        * {
+            box-sizing: border-box;
+        }
+        
+        .tagline {
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="cover-page">
+        <div class="report-container">
+            <div class="report-header">
+                <div class="page-header">
+                    <div class="logo">
+                        <!-- pil<span class="logo-highlight">oo</span> -->
+                        <img src="https://image.piloo.ai/static/images/logo.svg" alt="Logo" width="150" height="80">
+                    </div>
+                    <div class="month-info">
+                        Month<br>{{report_period}}
+                    </div>
+                </div>
+                
+                <div class="main-content">
+                    <div class="tagline">
+                        Safer days start with smarter eyes.
+                    </div>
+                    <div class="powered-by">
+                        Powered by Piloo.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-footer">
+                <div class="contact-section">
+                    <div class="contact-title">Contact Us</div>
+                    
+                    <div class="contact-list">
+                        <div class="contact-item">
+                            <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <span class="contact-text">Phone Number</span>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <span class="contact-text">piloo@pyrack.com</span>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <g fill="none" fill-rule="evenodd">
+                                    <path d="M10 5a5 5 0 0 0-5 5v2a5 5 0 0 0 5 5h4a5 5 0 0 0 5-5v-2a5 5 0 0 0-5-5h-4z"></path>
+                                    <path d="M8.5 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM15.5 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"></path>
+                                </g>
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"></path>
+                            </svg>
+                            <span class="contact-text">https://www.piloo.ai/</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

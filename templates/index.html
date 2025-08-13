@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Alerts Report Template</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 297mm;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .cover-page {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 297mm;
+            min-height: 297mm;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+        }
+        
+        .report-container {
+            width: 100%;
+            height: 297mm;
+            max-width: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .report-header {
+            width: 100%;
+            height: 240mm;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #1a1a4a 0%, #2d2d7a 50%, #1a1a4a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .report-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.05) 1px, transparent 1px),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.03) 1px, transparent 1px),
+                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 100px 100px, 150px 150px, 200px 200px;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 50px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+        
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 60px;
+        }
+        
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+        
+        .logo-highlight {
+            color: #ff6b6b;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+        
+        .made-with {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .made-with .heart {
+            color: #ff6b6b;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: -80px;
+        }
+        
+        .report-label {
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        
+        .report-title {
+            font-size: 72px;
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+        
+        .title-underline {
+            width: 120px;
+            height: 4px;
+            background: #ffd700;
+            margin-bottom: 40px;
+        }
+        
+        .date-range {
+            font-size: 24px;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        
+        .report-footer {
+            width: 100%;
+            height: 57mm;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            background: white;
+            padding: 40px 50px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+        
+        .footer-left {
+            flex: 1;
+        }
+        
+        .prepared-for {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .client-info {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .footer-center {
+            flex: 2;
+            padding: 0 40px;
+        }
+        
+        .lorem-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+            text-align: justify;
+        }
+        
+        .footer-right {
+            flex: 1;
+            text-align: right;
+        }
+        
+        .plan-info, .camera-info {
+            margin-bottom: 15px;
+        }
+        
+        .plan-label, .camera-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 2px;
+        }
+        
+        .plan-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a1a4a;
+        }
+        
+        .camera-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a4a;
+        }
+    </style>
+</head>
+<body>
+    <div class="cover-page">
+        <div class="report-container">
+            <div class="report-header">
+                <div class="header-content">
+                    <div class="top-section">
+                        <div class="logo-section">
+                            <div class="logo">
+                                <!-- pil<span class="logo-highlight">oo</span> -->
+                                 <img src="https://image.piloo.ai/static/images/logo.svg" alt="Logo" width="150" height="80">
+                            </div>
+                            <div class="subtitle">AI-Powered Video Analytics</div>
+                        </div>
+                        <div class="made-with">
+                            Made with <span class="heart">❤</span> by Pyrack
+                        </div>
+                    </div>
+                    
+                    <div class="main-content">
+                        <div class="report-label">WEEKLY REPORT</div>
+                        <div class="report-title">Event Alerts<br>Report</div>
+                        <div class="title-underline"></div>
+                        <div class="date-range">June 2025 - July 2025</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-footer">
+                <div class="footer-left">
+                    <div class="prepared-for">Prepared For:</div>
+                    <div class="client-info">{{client_name}}</div>
+                </div>
+                
+                <div class="footer-center">
+                    {% comment %} <div class="lorem-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    </div> {% endcomment %}
+                </div>
+                
+                <div class="footer-right">
+                    <div class="plan-info">
+                        <div class="plan-label">Plan:</div>
+                        <div class="plan-value">{{plan}}</div>
+                    </div>
+                    <div class="camera-info">
+                        <div class="camera-label">Active Cameras:</div>
+                        <div class="camera-value">{{active_cameras}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

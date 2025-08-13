@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Alerts Report - Incident Details</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 297mm;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+      }
+
+      .cover-page {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 297mm;
+        min-height: 297mm;
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+      }
+
+      .report-container {
+        width: 100%;
+        height: 297mm;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        background: white;
+        position: relative;
+      }
+
+      .report-header {
+        width: 100%;
+        height: 217mm;
+        box-sizing: border-box;
+        flex-shrink: 0;
+        padding: 40px 50px;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      .report-footer {
+        width: 100%;
+        height: 57mm;
+        box-sizing: border-box;
+        flex-shrink: 0;
+        /* background: #f8f9fa; */
+        /* border-top: 1px solid #e9ecef; */
+        position: relative;
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 0px;
+      }
+
+      .logo-highlight {
+        color: #ff6b6b;
+      }
+
+      .date-info {
+        color: #0f0773;
+        font-size: 16px;
+        font-weight: 700;
+        padding-right: 2%;
+      }
+
+      .camera-count-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: white;
+        padding: 30px 25px;
+        margin-bottom: 30px;
+        border-top: 1px solid #e9ecef;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .camera-count-left {
+        display: flex;
+        align-items: center;
+      }
+
+      .camera-icon {
+        width: 30px;
+        height: 30px;
+        margin-right: 12px;
+        color: #1a1a4a;
+        background-color: #0f07731a;
+        padding: 5px;
+        border-radius: 5px;
+      }
+
+      .camera-count-label {
+        font-size: 22px;
+        font-weight: 600;
+        color: #0f0773;
+        line-height: 28px;
+      }
+
+      .camera-count-value {
+        font-size: 22px;
+        font-weight: 600;
+        color: #0f0773;
+      }
+
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .metric-card {
+        display: flex;
+        flex-direction: column;
+        padding: 14px 10px;
+        border-left: 1px solid #e0e0e0;
+        justify-content: center;
+        gap: 3px;
+      }
+
+      .metric-card:first-child {
+        border-left: none; /* remove left border from first column */
+      }
+.metric-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f0773;
+  text-align: center;
+  white-space: normal; /* allow wrapping */
+  line-height: 1.6em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+.metric-label {
+  font-size: 14px;
+  color: #0f0773;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+      .alert-section {
+        background: white;
+        border: 1px solid #0f077333;
+        border-radius: 14px;
+        padding: 25px;
+        margin-bottom: 25px;
+        margin-left: 5px;
+        margin-top: 5px;
+        margin-right: 5px;
+      }
+
+      .alert-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #0f0773;
+        margin-bottom: 20px;
+      }
+
+      .alert-content {
+        gap: 26px;
+        display: flex;
+        align-items: center;
+      }
+
+      .camera-feed {
+        flex: 1;
+        max-width: 450px;
+      }
+
+      .camera-image {
+        width: 100%;
+        height: 180px;
+        background: #000;
+        border-radius: 8px;
+        position: relative;
+        overflow: hidden;
+        object-fit: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .camera-image-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 8px;
+      }
+
+      .rec-indicator {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        background: #dc2626;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .camera-overlay {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        text-align: center;
+      }
+
+      .alert-details {
+        color: black;
+        border-radius: 12px;
+        padding: 5px;
+        min-width: 180px;
+          word-wrap: break-word;
+flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+
+  .details-row {
+  display: flex;
+  column-gap: 3px; /* reduced gap between label and value */
+  align-items: center;
+  white-space: nowrap; /* prevent wrapping */
+}
+
+.details-label {
+  font-weight: 600;
+  min-width: auto; /* remove fixed spacing */
+  color: #1a1a1a;
+  font-size: 14px;
+}
+
+.details-value {
+  color: #444;
+  font-size: 12px;
+  white-space: nowrap; /* ensure value stays in one line */
+}
+
+      .details-header {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .details-camera {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 16px;
+      }
+
+      .details-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        font-size: 14px;
+      }
+
+      .details-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+        opacity: 0.9;
+      }
+
+      .page-number {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        color: #999;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      /* Prevent overflow */
+      * {
+        box-sizing: border-box;
+      }
+
+      .metric-card * {
+        overflow: hidden;
+        word-wrap: break-word;
+      }
+
+      @media print {
+        .alert-section {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="cover-page">
+      <div class="report-container">
+        <div class="report-header">
+          <div class="page-header">
+            <img
+              src="https://image.piloo.ai/static/images/PilooIcon.svg"
+              alt="Logo"
+              width="40"
+              height="50"
+            />
+            <div class="date-info">{{report_period}}</div>
+          </div>
+
+          <div class="camera-count-section">
+            <div class="camera-count-left">
+              <svg
+                class="camera-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
+                ></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
+              <div class="camera-count-label">No of Cameras</div>
+            </div>
+            <div class="camera-count-value">{{active_cameras }}</div>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric-card">
+                       <div class="metric-label">Total Events<br />Detected</div>
+     <div class="metric-value">{{ total_events }} Events</div>
+            </div>
+            <div class="metric-card">
+                        <div class="metric-label">Most Active<br />Camera</div>
+    <div class="metric-value">{{ max_camera }}</div>
+            </div>
+            <div class="metric-card">
+                        <div class="metric-label">Peak Incident<br />Time</div>
+    <div class="metric-value">{{ peak_incidence_time }}</div>
+            </div>
+            <div class="metric-card">
+                          <div class="metric-label">Most Common<br />Event</div>
+  <div class="metric-value">{{ most_common }}</div>
+            </div>
+          </div>
+
+          {% for card in alert_cards %}
+          <div class="alert-section">
+            <div class="alert-title">{{ card.alert_type }}</div>
+            <div class="alert-content">
+              <div class="camera-feed">
+                <div class="camera-image">
+                  <div class="rec-indicator">REC</div>
+                  <img
+                    class="camera-image-img"
+                    src="{{ card.image_url }}"
+                    alt=""
+                    width="400"
+                    height="180"
+                  />
+                </div>
+              </div>
+              <div class="alert-details">
+                <div class="details-row">
+                  <div class="details-label">Date:</div>
+                  <div class="details-value">{{card.date}}</div>
+                </div>
+                <div class="details-row">
+                  <div class="details-label">Time:</div>
+                  <div class="details-value">{{card.time}}</div>
+                </div>
+                <div class="details-row">
+                  <div class="details-label">Camera:</div>
+                  <div class="details-value">{{card.camera_name}}</div>
+                </div>
+                <div class="details-row">
+                  <div class="details-label">Zone:</div>
+                  <div class="details-value">{{card.location}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- <div class="report-footer">
+                <div class="page-number">02</div>
+            </div> -->
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Your Gratitua OTP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9fafb;
+      padding: 20px;
+    }
+    .container {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 24px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .header {
+      font-size: 22px;
+      margin-bottom: 16px;
+      color: #1f2937;
+    }
+    .message {
+      font-size: 16px;
+      color: #374151;
+    }
+    .code {
+      display: inline-block;
+      background-color: #e0f2fe;
+      color: #0284c7;
+      font-weight: bold;
+      padding: 10px 16px;
+      margin: 16px 0;
+      border-radius: 6px;
+      font-size: 18px;
+    }
+    .footer {
+      font-size: 14px;
+      color: #9ca3af;
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">Your Email Verification Code </div>
+    <div class="message">
+      <p>Hello,</p>
+      <p>To proceed with your verification, please use the following One-Time Password (OTP):</p>
+      <div class="code ">{{ otp }}</div>
+      <p>This OTP is valid for the next 10 minutes. Please do not share it with anyone.</p>
+    </div>
+    <div class="footer">Sent with 💛 by the Piloo.ai Team</div>
+  </div>
+</body>
+</html>

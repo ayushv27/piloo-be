@@ -1,0 +1,35 @@
+_<!DOCTYPE html>
+<html>
+  <head>
+    <title>Low Severity Alert</title>
+  </head>
+  <body>
+    <!-- {% load static %} -->
+
+    <p>
+      <img
+        src="https://image.piloo.ai/static/images/Blue_Gradient_Logo.png"
+        alt="Piloo.ai Logo"
+        width="150"
+      />
+    </p>
+
+    <p>Hi {{ client_name }},</p>
+    <p>A high severity alert has been detected.</p>
+
+    <ul>
+      <li><strong>Label:</strong> {{ label }}</li>
+      <li><strong>Date:</strong> {{ alert_date }}</li>
+      <li><strong>Time:</strong> {{ alert_time }}</li>
+      <li><strong>Zone:</strong> {{ zone_name }}</li>
+      <li><strong>Camera:</strong> {{ camera_name }}</li>
+    </ul>
+
+    <p>View the clip: <a href="{{ clip_url }}">{{ clip_url }}</a></p>
+    {% if thumbnail_url %}
+    <p><img src="{{ thumbnail_url }}" alt="Thumbnail" width="400" /></p>
+    {% endif %}
+
+    <p>Regards,<br />Piloo.ai Team</p>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+core/migrations/
+postgres-data/
+logs/
+utils/
+static/
+.env
+media/
+pdf_reports/
+.pytest_cache/
+core/migrations_old/*
+core/migrations_old
+piloo/.env

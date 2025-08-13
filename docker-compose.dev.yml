@@ -1,0 +1,47 @@
+services:
+
+  web:
+    container_name: piloo_web
+    build: .
+    image: piloobe_image
+    command: bash -c "python manage.py runserver 0.0.0.0:7000 --settings=piloo.settings.dev"
+    environment:
+      - REDIS_HOST=redis
+    ports:
+      - "7000:7000"
+    volumes:
+      - .:/code
+      # - /home/beast/Documents/piloo/external_dir:/code/media
+      - ./media:/code/media
+    restart: always
+    networks:
+      - piloo_external
+  celery:
+    # build: .
+    image: piloobe_image
+    command: celery -A piloo worker -l info
+    environment:
+      - DJANGO_SETTINGS_MODULE=piloo.settings.dev
+    volumes:
+      - .:/app
+    restart: always
+    networks:
+      - piloo_external
+
+  celery-beat:
+    # build: .
+    image: piloobe_image
+    command: celery -A piloo beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    environment:
+      - DJANGO_SETTINGS_MODULE=piloo.settings.dev
+    volumes:
+      - .:/app
+    restart: always
+    networks:
+      - piloo_external
+
+networks:
+  piloo_external:
+    external: true
+
+    

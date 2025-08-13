@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Alerts Report - Page 2</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 297mm;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .cover-page {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 297mm;
+            min-height: 297mm;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+        }
+        
+        .report-container {
+            width: 100%;
+            height: 297mm;
+            max-width: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+        
+        .report-header {
+            width: 100%;
+            height: 217mm;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            padding: 40px 50px;
+        }
+        
+        .report-footer {
+            width: 100%;
+            height: 80mm;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .logo-small {
+            width: 40px;
+            height: 40px;
+            background: #1a1a4a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .logo-highlight {
+            color: #ff6b6b;
+        }
+        
+        .month-info {
+            color: #666;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .page-title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #1a1a4a;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .page-description {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 50px;
+            max-width: 600px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 26px;
+            margin-bottom: 60px;
+        }
+        
+        .metric-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 30px 25px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .metric-value {
+            font-size: 26px;
+            font-weight: bold;
+            color: #1a1a4a;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+        
+        .metric-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .chart-section {
+            margin-top: 40px;
+        }
+        
+        .chart-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .chart-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            opacity: 0.6;
+        }
+        
+        .chart-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a1a4a;
+        }
+        
+        .chart-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+        
+        .pie-chart {
+            width: 420px;
+            height: 420px;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .chart-legend {
+            flex: 1;
+            max-width: 300px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 12px 0;
+        }
+        
+        .legend-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+        
+        .legend-color.intrusion {
+            background: #4c51bf;
+        }
+        
+        .legend-color.motion {
+            background: #667eea;
+        }
+        
+        .legend-color.mask {
+            background: #764ba2;
+        }
+        
+        .legend-color.safety {
+            background: #a8a8ff;
+        }
+        
+        .legend-label {
+            font-size: 16px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .legend-percentage {
+            font-size: 16px;
+            color: #666;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="cover-page">
+        <div class="report-container">
+            <div class="report-header">
+                <div class="page-header">
+                    <div class="logo-small">
+                        <img src="https://image.piloo.ai/static/images/frame468.svg" alt="Logo" width="60" height="60">
+                    </div>
+                    <div class="month-info">
+                        Month<br>June - July
+                    </div>
+                </div>
+                
+                <div class="page-title">Event Alert Report</div>
+                
+                <div class="page-description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </div>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">{{total_events}}</div>
+                        <div class="metric-label">Total Events<br>Detected</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">{{max_camera}}</div>
+                        <div class="metric-label">Most Active<br>Camera</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">01:00<br>PM</div>
+                        <div class="metric-label">Peak Incident<br>Time</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">{{max_alert_type}}</div>
+                        <div class="metric-label">Most Common<br>Event</div>
+                    </div>
+                </div>
+                
+                <div class="chart-section">
+                    <div class="chart-header">
+                        <svg class="chart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                            <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                        </svg>
+                        <div class="chart-title">Events Breakdown</div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <img class="pie-chart" src={{pie_chart_path}} alt="Pie Chart" width="280" height="280">    
+                        
+                        <!-- <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-info">
+                                    <div class="legend-color intrusion"></div>
+                                    <div class="legend-label">Intrusion</div>
+                                </div>
+                                <div class="legend-percentage">39.11%</div>
+                            </div>
+                            
+                            <div class="legend-item">
+                                <div class="legend-info">
+                                    <div class="legend-color motion"></div>
+                                    <div class="legend-label">Motion Detected</div>
+                                </div>
+                                <div class="legend-percentage">28.02%</div>
+                            </div>
+                            
+                            <div class="legend-item">
+                                <div class="legend-info">
+                                    <div class="legend-color mask"></div>
+                                    <div class="legend-label">Mask Missing</div>
+                                </div>
+                                <div class="legend-percentage">23.13%</div>
+                            </div>
+                            
+                            <div class="legend-item">
+                                <div class="legend-info">
+                                    <div class="legend-color safety"></div>
+                                    <div class="legend-label">Safety & Security</div>
+                                </div>
+                                <div class="legend-percentage">5.03%</div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

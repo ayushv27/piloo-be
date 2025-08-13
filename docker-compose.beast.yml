@@ -1,0 +1,71 @@
+services:
+  # redis:
+  #   image: redis:alpine
+  #   ports:
+  #     - "6379:6379"
+  #   environment:
+  #     - DJANGO_SETTINGS_MODULE=piloo.settings.local
+  #   restart: always
+  #   networks:
+  #     - piloo_external
+  # db:
+  #   image: postgres
+  #   container_name: local_piloo_db
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     - POSTGRES_DB=piloo_db
+  #     - POSTGRES_USER=piloo
+  #     - POSTGRES_PASSWORD=oolip
+  #   volumes: 
+  #     - ./postgres-data:/var/lib/postgresql/data
+  #   restart: always
+  #   networks:
+  #     - piloo_external
+
+  web:
+    container_name: piloo_web
+    build: .
+    image: piloobe_image
+    command: bash -c "python manage.py runserver 0.0.0.0:7000 --settings=piloo.settings.beast"
+    ports:
+      - "7000:7000"
+    volumes:
+      - .:/code
+      # - /home/beast/Documents/piloo/external_dir:/code/media
+      - ./media:/code/media
+    # depends_on:
+    #   - db
+    restart: always
+    networks:
+      - piloo_external
+
+  celery:
+    build: .
+    command: celery -A piloo worker -l info
+    environment:
+      - DJANGO_SETTINGS_MODULE=piloo.settings.beast
+    volumes:
+      - .:/app
+    # depends_on:
+    #   - redis
+    restart: always
+    networks:
+      - piloo_external
+
+  celery-beat:
+    build: .
+    command: celery -A piloo beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    environment:
+      - DJANGO_SETTINGS_MODULE=piloo.settings.beast
+    volumes:
+      - .:/app
+    # depends_on:
+    #   - redis
+    restart: always
+    networks:
+      - piloo_external
+
+networks:
+  piloo_external:
+    external: true

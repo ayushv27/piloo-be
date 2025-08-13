@@ -1,0 +1,51 @@
+<html>
+<head>
+    <style>
+        @page { size: A4; margin: 20mm; }
+        body { font-family: Arial, sans-serif; font-size: 12px; color: #222; }
+        .heading { font-size: 24px; font-weight: bold; }
+        .table { width: 100%; border-collapse: collapse; }
+        .table th, .table td { border: 1px solid #ccc; padding: 6px; text-align: left; }
+        .chart-img { width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="heading">WEEKLY REPORT</div>
+    <p>Prepared For: Acme Security Corp</p>
+    <p>Report Period: June 2025 - July 2025</p>
+    <p>Plan: PRO</p>
+
+    <h3>Total Events Detected: 102</h3>
+    <h3>Active Cameras: 10</h3>
+
+    <img src="/code/templates/alert_chart.png" class="chart-img" />
+
+    <h3>Events Breakdown</h3>
+    <table class="table">
+        <tr>
+            <th>Camera Name</th>
+            <th>Count</th>
+            <th>Most Frequent Event</th>
+        </tr>
+        
+        <tr>
+            <td>Camera 12</td>
+            <td>201</td>
+            <td>Intrusion</td>
+        </tr>
+        
+        <tr>
+            <td>Camera 23</td>
+            <td>32</td>
+            <td>Mask Missing</td>
+        </tr>
+        
+        <tr>
+            <td>Camera 34</td>
+            <td>456</td>
+            <td>Motion Detected</td>
+        </tr>
+        
+    </table>
+</body>
+</html>

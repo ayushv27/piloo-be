@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Alerts Report - Event Heatmap</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 297mm;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .cover-page {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 297mm;
+            min-height: 297mm;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+        }
+        
+        .report-container {
+            width: 100%;
+            height: 297mm;
+            max-width: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            position: relative;
+        }
+        
+        .report-header {
+            width: 100%;
+            height: 240mm;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            padding: 40px 50px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .report-footer {
+            width: 100%;
+            height: 57mm;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            position: relative;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+            flex-shrink: 0;
+        }
+        
+        .logo-small {
+            width: 40px;
+            height: 40px;
+            background: #1a1a4a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        
+        .logo-highlight {
+            color: #ff6b6b;
+        }
+        
+        .month-info {
+            color: #666;
+            font-size: 16px;
+            font-weight: 500;
+            text-align: right;
+            line-height: 1.3;
+        }
+        
+        .heatmap-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .heatmap-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-shrink: 0;
+        }
+        
+        .heatmap-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            opacity: 0.6;
+            flex-shrink: 0;
+        }
+        
+        .heatmap-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a1a4a;
+        }
+        
+.heatmap-img {
+
+}
+
+        .heatmap-content {
+            flex: 1;
+            background: #fafafa;
+            border: 2px dashed #e9ecef;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        
+        .heatmap-placeholder {
+            color: #999;
+            font-size: 18px;
+            font-style: italic;
+            text-align: center;
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: #000;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* Prevent overflow */
+        * {
+            box-sizing: border-box;
+        }
+        
+        /* Grid pattern for heatmap background */
+        .heatmap-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.5;
+        }
+        
+        @media print {
+            .heatmap-content {
+                break-inside: avoid;
+            }
+        }
+        
+        /* Responsive adjustments while maintaining A4 layout */
+        .heatmap-content {
+            transition: all 0.3s ease;
+        }
+        
+        .heatmap-content:hover {
+            border-color: #d1d5db;
+            background: #f9fafb;
+        }
+    </style>
+</head>
+<body>
+    <div class="cover-page">
+        <div class="report-container">
+            <div class="report-header">
+                <div class="page-header">
+                    <div class="logo-small">
+                        <!-- <span class="logo-highlight">oo</span> -->
+                        <img src="https://image.piloo.ai/static/images/frame468.svg" alt="Logo" width="120" height="80">
+                    </div>
+                    <div class="month-info">
+                        Month<br>{{report_period}}
+                    </div>
+                </div>
+                
+                <div class="heatmap-section">
+                    <div class="heatmap-header">
+                        <svg class="heatmap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="5" height="5"></rect>
+                            <rect x="10" y="3" width="5" height="5"></rect>
+                            <rect x="17" y="3" width="5" height="5"></rect>
+                            <rect x="3" y="10" width="5" height="5"></rect>
+                            <rect x="10" y="10" width="5" height="5"></rect>
+                            <rect x="17" y="10" width="5" height="5"></rect>
+                            <rect x="3" y="17" width="5" height="5"></rect>
+                            <rect x="10" y="17" width="5" height="5"></rect>
+                            <rect x="17" y="17" width="5" height="5"></rect>
+                        </svg>
+                        <div class="heatmap-title">Event Heatmap</div>
+                    </div>
+                    
+                    <div class="heatmap-content">
+
+                        <img src={{stack_path}} class="heatmap-img" die height="100%" width="100%">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-footer">
+                <div class="page-number">01</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

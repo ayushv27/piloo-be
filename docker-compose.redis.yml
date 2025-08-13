@@ -1,0 +1,65 @@
+services:
+  web:
+    container_name: piloo_web
+    build: .
+    image: piloobe_image
+    command: bash -c "python manage.py runserver 0.0.0.0:7000 --settings=piloo.settings.beast"
+    ports:
+      - "7000:7000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=piloo.settings.beast
+      - REDIS_HOST=13.127.210.74
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=piloo123
+      - CELERY_BROKER_URL=redis://:piloo123@13.127.210.74:6379/0
+      - CELERY_RESULT_BACKEND=redis://:piloo123@13.127.210.74:6379/0
+    volumes:
+      - .:/code
+      # - /home/beast/Documents/piloo/external_dir:/code/media
+      - ./media:/code/media
+    # depends_on:
+    #   - db
+    restart: always
+    networks:
+      - piloo_external
+  celery:
+    build: .
+    command: celery -A piloo worker -l info
+    environment:
+      - DJANGO_SETTINGS_MODULE=piloo.settings.beast
+      - REDIS_HOST=13.127.210.74
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=piloo123
+      - CELERY_BROKER_URL=redis://:piloo123@13.127.210.74:6379/0
+      - CELERY_RESULT_BACKEND=redis://:piloo123@13.127.210.74:6379/0
+    volumes:
+      - .:/app
+    # depends_on:
+    #   - redis
+    restart: always
+    networks:
+      - piloo_external
+
+  celery-beat:
+    build: .
+    command: celery -A piloo beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    environment:
+      - DJANGO_SETTINGS_MODULE=piloo.settings.beast
+      - REDIS_HOST=13.127.210.74
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=piloo123
+      - CELERY_BROKER_URL=redis://:piloo123@13.127.210.74:6379/0
+      - CELERY_RESULT_BACKEND=redis://:piloo123@13.127.210.74:6379/0
+    volumes:
+      - .:/app
+    # depends_on:
+    #   - redis
+    restart: always
+    networks:
+      - piloo_external
+
+networks:
+  piloo_external:
+    external: true
+
+    
